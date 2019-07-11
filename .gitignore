@@ -1,0 +1,6 @@
+errors.txt
+log.txt
+*.rpyc
+saves/
+cache/
+tl/
