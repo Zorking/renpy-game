@@ -1,12 +1,34 @@
-screen inventory_menu:
-    zorder 5
-    imagemap:
-        xpos 0
-        ypos 0
-        xsize 1200 #width of ground/hover image.
-        ysize 150 #height of ground/hover image.
+init python:
+    class myDisplay(renpy.Displayable):
+        def __init__(self, **kwargs):
+            renpy.Displayable.__init__(self, **kwargs)
 
-        ground "images/bottom_panel.png"
+        def render(self, width, height, st, at):
+                render = renpy.Render(1280, 150)
+                canvas = render.canvas()
+
+                # canvas.polygon("#003366", (461, 199, 300, 400), width=0)
+                canvas.rect("#000", (0, 0, 1280, 150))
+                for x in range(10):
+                    canvas.rect("#fff", (10 + x * 160, 2, 140, 140))
+                # color, (left offset, right offset, width, height)
+                # canvas.line("#000", (80, 10), (80, 80))
+                # canvas.line("#000", (150, 45), (80, 80))
+                # canvas.line("#000", (150, 300), (80, 799))
+                # canvas.line("#000", (400, 45), (80, 500))
+
+                return render
+
+screen inventory_menu:
+    add myDisplay()
+    # zorder 5
+    # imagemap:
+    #     xpos 0
+    #     ypos 0
+    #     xsize 1200 #width of ground/hover image.
+    #     ysize 150 #height of ground/hover image.
+    #
+    #     ground "images/bottom_panel.png"
         # hover "images/bottom_panel_hover.png"
         #Menu Name
         # add "images/button_wide.png" xpos 130 ypos 0

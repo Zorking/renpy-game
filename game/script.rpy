@@ -7,8 +7,9 @@ define gm = Character("", color="#0020C2")
 default some_flag = False
 
 
-# The game starts here.
-
+# убрать главное меню
+# label main_menu:
+#     return
 
 label start:
     $ some_flag = not some_flag
