@@ -92,6 +92,9 @@ init -1 python:
     # config.overlay_functions.append(display_items_overlay)
 
 
+screen my_keys2():
+    textbutton "Cont..." action Return()
+
 screen inventory_button:
     textbutton "Show Inventory" action [ Show("inventory_screen"), Hide("inventory_button")] align (.95,.04)
 
@@ -154,6 +157,17 @@ default some_flag = False
 label main_menu:
     return
 
+screen input_q:
+
+    window:
+
+        style "nvl_window"
+
+        text "Твое имя" xalign 0.5 yalign 0.4
+        input id "input" xalign 0.5 yalign 0.5
+
+    use quick_menu
+
 label start:
     python:
         player = Player("Derp", 100, 50)
@@ -169,48 +183,46 @@ label start:
         inventory.add(chocolate)
         inventory.add(banana)
 
+
     $ some_flag = not some_flag
     show screen keymap_screen
-    # Show a background. This uses a placeholder by default, but you can
-    # add a file (named either "bg room.png" or "bg room.jpg") to the
-    # images directory to show it.
+    show screen inventory_button
 
     scene bg return_home
-    with fade
 
-
-    # show shark normal at left - показывает персонажа with dissolve - эффект
-    #This shows a character sprite. A placeholder is used, but you can
-    # replace it by adding a file named "eileen happy.png" to the images
-    # directory.
-
-
-
-    # These display lines of dialogue.
+    show screen my_keys2()
     gm "Наконец-то я дома."
 
     scene bg computer_turns_on
-    with fade
+    # with fade
 
     gm "Продолжим игру..."
 
     scene bg choose_gender
-    with fade
+    # with fade
 
     gm "Создание персонажа! Моя любимая часть. За кого я хочу играть?"
 
     #Как сделать выбор пола? Сейчас пол установлен на женский.
 
+    menu:
+
+        gm "Are you a boy or a girl"
+
+        "Boy":
+            $ input_gender = "boy"
+
+        "Girl":
+            $ input_gender = "girl"
+
     gm "Я люблю отыгрывать себя в разных мирах."
 
     scene bg choose_name
-    with fade
-
-    gm "Мое имя.."
+    $ inputed_name = renpy.call_screen("input_q", prompt="Мое имя..")
 
     #Появляется консоль ввода букв.
 
-    gm "Очень оригинально конечно, но я люблю свое имя."
+    gm "Пол [input_gender] и имя [inputed_name] Очень оригинально конечно, но я люблю свое имя."
 
     scene bg room_for_girl
 
